@@ -15,7 +15,7 @@ import rs.edu.raf.rma.homework3.repository.MovieRepository;
 import rs.edu.raf.rma.homework3.repository.db.entity.Movie;
 
 public class MainViewModel extends AndroidViewModel {
-    
+
     private LiveData<List<Movie>> mMoviesLiveData;
     private LiveData<Integer> mMoviesCountLiveData;
     private MutableLiveData<String> mFilterLiveData;
