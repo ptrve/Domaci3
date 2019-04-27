@@ -43,6 +43,10 @@ public class MovieRepository {
         return movieDao.getMoviesByName(name);
     }
 
+    public LiveData<List<Movie>> getMoviesFiltered(String name, String year, int score) {
+        return movieDao.getMoviesFiltered(name, year, score);
+    }
+
     public void removeMovie(Movie movie) {
         executorService.submit(() -> movieDao.delete(movie));
     }

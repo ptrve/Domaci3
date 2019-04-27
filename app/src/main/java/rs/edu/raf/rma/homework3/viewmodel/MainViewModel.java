@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rs.edu.raf.rma.homework3.repository.MovieRepository;
@@ -21,6 +22,9 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<String> mFilterLiveData;
     private LiveData<List<Movie>> mFilteredMoviesLiveData;
 
+    private MutableLiveData<List<String>> mFilterArrayLiveData;
+    private List<String> filterArray;
+
     private MovieRepository movieRepository;
 
     public MainViewModel(@NonNull Application application) {
@@ -32,10 +36,23 @@ public class MainViewModel extends AndroidViewModel {
 
         mFilterLiveData = new MutableLiveData<>();
 
-        mFilteredMoviesLiveData = Transformations.switchMap(mFilterLiveData, new Function<String, LiveData<List<Movie>>>() {
+//        mFilteredMoviesLiveData = Transformations.switchMap(mFilterLiveData, new Function<String, LiveData<List<Movie>>>() {
+//            @Override
+//            public LiveData<List<Movie>> apply(String filter) {
+//                return movieRepository.getMoviesByName(filter);
+//            }
+//        });
+
+        mFilterArrayLiveData = new MutableLiveData<>();
+        filterArray = new ArrayList<>();
+        filterArray.add("");
+        filterArray.add("");
+        filterArray.add("0");
+
+        mFilteredMoviesLiveData = Transformations.switchMap(mFilterArrayLiveData, new Function<List<String>, LiveData<List<Movie>>>() {
             @Override
-            public LiveData<List<Movie>> apply(String filter) {
-                return movieRepository.getMoviesByName(filter);
+            public LiveData<List<Movie>> apply(List<String> input) {
+                return movieRepository.getMoviesFiltered(input.get(0), input.get(1), Integer.parseInt(input.get(2)));
             }
         });
 
@@ -65,6 +82,21 @@ public class MainViewModel extends AndroidViewModel {
 
     public void setFilter(String filter) {
         mFilterLiveData.setValue(filter);
+    }
+
+    public void setNameFilter(String filter) {
+        filterArray.set(0, filter);
+        mFilterArrayLiveData.setValue(filterArray);
+    }
+    public void setYearFilter(String filter) {
+        filterArray.set(1, filter);
+        mFilterArrayLiveData.setValue(filterArray);
+    }
+    public void setScoreFilter(String filter) {
+        if (filter.equals(""))
+            filter = "0";
+        filterArray.set(2, filter);
+        mFilterArrayLiveData.setValue(filterArray);
     }
 
     public LiveData<Integer> getMoviesCountLiveData() {

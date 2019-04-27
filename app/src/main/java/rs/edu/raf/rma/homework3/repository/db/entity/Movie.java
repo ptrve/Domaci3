@@ -19,20 +19,20 @@ public class Movie {
     @ColumnInfo(name = "director")
     private String mDirector;
     @ColumnInfo(name = "producer")
-    private String mDroducer;
+    private String mProducer;
     @NonNull
     @ColumnInfo(name = "year")
     private String mYear;
     @NonNull
     @ColumnInfo(name = "rating")
-    private String mRating;
+    private int mRating;
 
-    public Movie(int mId, @NonNull String mName, String mDescription, @NonNull String mDirector, String mDroducer, @NonNull String mYear, @NonNull String mRating) {
+    public Movie(int mId, @NonNull String mName, String mDescription, @NonNull String mDirector, String mProducer, @NonNull String mYear, @NonNull int mRating) {
         this.mId = mId;
         this.mName = mName;
         this.mDescription = mDescription;
         this.mDirector = mDirector;
-        this.mDroducer = mDroducer;
+        this.mProducer = mProducer;
         this.mYear = mYear;
         this.mRating = mRating;
     }
@@ -55,8 +55,8 @@ public class Movie {
         return mDirector;
     }
 
-    public String getDroducer() {
-        return mDroducer;
+    public String getProducer() {
+        return mProducer;
     }
 
     @NonNull
@@ -65,7 +65,7 @@ public class Movie {
     }
 
     @NonNull
-    public String getRating() {
+    public int getRating() {
         return mRating;
     }
 
@@ -85,15 +85,15 @@ public class Movie {
         this.mDirector = mDirector;
     }
 
-    public void setDroducer(String mDroducer) {
-        this.mDroducer = mDroducer;
+    public void setProducer(String mProducer) {
+        this.mProducer = mProducer;
     }
 
     public void setYear(@NonNull String mYear) {
         this.mYear = mYear;
     }
 
-    public void setRating(@NonNull String mRating) {
+    public void setRating(@NonNull int mRating) {
         this.mRating = mRating;
     }
 

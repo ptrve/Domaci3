@@ -35,5 +35,6 @@ public interface MovieDao {
     @Query("SELECT * FROM movie WHERE name LIKE :name || '%'")
     LiveData<List<Movie>> getMoviesByName(String name);
 
-
+    @Query("SELECT * FROM movie WHERE name LIKE :name || '%' AND year LIKE :year || '%' AND rating >= :score")
+    LiveData<List<Movie>> getMoviesFiltered(String name, String year, int score);
 }

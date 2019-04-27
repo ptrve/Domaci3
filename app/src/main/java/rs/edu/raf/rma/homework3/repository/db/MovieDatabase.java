@@ -2,11 +2,14 @@ package rs.edu.raf.rma.homework3.repository.db;
 
 import android.content.Context;
 
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import rs.edu.raf.rma.homework3.repository.db.dao.MovieDao;
+import rs.edu.raf.rma.homework3.repository.db.entity.Movie;
 
+@Database(entities = {Movie.class}, version = 1)
 public abstract class MovieDatabase extends RoomDatabase {
 
     private static volatile MovieDatabase DATABASE;
