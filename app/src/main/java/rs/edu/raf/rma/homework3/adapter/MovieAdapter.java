@@ -37,8 +37,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
         Movie movie = mDataSet.get(position);
+        int score = movie.getRating();
+        holder.tvScore.setText(String.valueOf(score));
+        if (score >= 90)
+            holder.tvScore.setBackgroundResource(R.drawable.rating_green);
+        else if (score >= 66)
+            holder.tvScore.setBackgroundResource(R.drawable.rating_yellow);
+        else
+            holder.tvScore.setBackgroundResource(R.drawable.rating_red);
+
         holder.tvName.setText(movie.getName());
-        holder.tvScore.setText(String.valueOf(movie.getRating()));
         holder.tvDirector.setText(movie.getDirector());
         holder.tvYear.setText(movie.getYear());
     }

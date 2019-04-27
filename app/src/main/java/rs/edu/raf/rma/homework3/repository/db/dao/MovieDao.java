@@ -17,10 +17,10 @@ public interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Movie movie);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Movie ...movie);
 
-    @Insert
+    @Insert(onConflict =  OnConflictStrategy.REPLACE)
     void insert(List<Movie> movies);
 
     @Delete

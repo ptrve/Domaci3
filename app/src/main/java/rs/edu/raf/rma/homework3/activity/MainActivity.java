@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         Movie mov2 = new Movie(Util.generateId(), "Batman", "Description info", "Peter Steele", "Rope Smith", "1999", 75);
         Movie mov3 = new Movie(Util.generateId(), "Spiderman", "Description info", "Peter Steele", "Rope Smith", "2000", 60);
 
-        ArrayList<Movie> movlist = new ArrayList<>();
 
     }
 
