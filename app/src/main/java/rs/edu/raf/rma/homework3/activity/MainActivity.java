@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 import rs.edu.raf.rma.homework3.R;
 import rs.edu.raf.rma.homework3.adapter.MovieAdapter;
 import rs.edu.raf.rma.homework3.repository.db.entity.Movie;
+import rs.edu.raf.rma.homework3.repository.web.model.Resource;
 import rs.edu.raf.rma.homework3.util.Util;
 import rs.edu.raf.rma.homework3.viewmodel.MainViewModel;
 
@@ -47,10 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void test() {
-        Movie mov1 = new Movie(Util.generateId(), "Avengers", "Description info", "Peter Steele", "Rope Smith", "1998", 90);
-        Movie mov2 = new Movie(Util.generateId(), "Batman", "Description info", "Peter Steele", "Rope Smith", "1999", 75);
-        Movie mov3 = new Movie(Util.generateId(), "Spiderman", "Description info", "Peter Steele", "Rope Smith", "2000", 60);
-
+        Movie mov1 = new Movie(String.valueOf(Util.generateId()), "Avengers", "Description info", "Peter Steele", "Rope Smith", "1998", 90);
+        Movie mov2 = new Movie(String.valueOf(Util.generateId()), "Batman", "Description info", "Peter Steele", "Rope Smith", "1999", 75);
+        Movie mov3 = new Movie(String.valueOf(Util.generateId()), "Spiderman", "Description info", "Peter Steele", "Rope Smith", "2000", 60);
 
     }
 
@@ -132,5 +133,23 @@ public class MainActivity extends AppCompatActivity {
                         mMovieAdapter.setData(movies);
                     }
                 });
+
+        mViewModel.getWebMovies().observe(this,
+                new Observer<Resource<List<rs.edu.raf.rma.homework3.repository.web.model.Movie>>>() {
+                    @Override
+                    public void onChanged(Resource<List<rs.edu.raf.rma.homework3.repository.web.model.Movie>> listResource) {
+                        if (listResource.isSuccessfull()) {
+                            Toast.makeText(getApplicationContext(), "Data fetched from the server!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Data fetch failed!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.refreshMovies();
     }
 }

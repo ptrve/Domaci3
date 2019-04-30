@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 
 import rs.edu.raf.rma.homework3.repository.MovieRepository;
 import rs.edu.raf.rma.homework3.repository.db.entity.Movie;
+import rs.edu.raf.rma.homework3.repository.web.model.Resource;
 
 public class MainViewModel extends AndroidViewModel {
 
@@ -27,8 +30,14 @@ public class MainViewModel extends AndroidViewModel {
 
     private MovieRepository movieRepository;
 
+    private MediatorLiveData<Resource<List<rs.edu.raf.rma.homework3.repository.web.model.Movie>>> mWebMovieMediatorLiveData;
+    private LiveData<Resource<List<rs.edu.raf.rma.homework3.repository.web.model.Movie>>> mWebMovieLiveData;
+
     public MainViewModel(@NonNull Application application) {
         super(application);
+
+        mWebMovieLiveData = new MutableLiveData<>();
+        mWebMovieMediatorLiveData = new MediatorLiveData<>();
 
         movieRepository = new MovieRepository(getApplication());
 
@@ -111,4 +120,25 @@ public class MainViewModel extends AndroidViewModel {
         movieRepository.removeMovie(movie);
     }
 
+
+    public void refreshMovies() {
+        mWebMovieMediatorLiveData.removeSource(mWebMovieLiveData);
+        mWebMovieLiveData = movieRepository.getMoviesFromWeb();
+        mWebMovieMediatorLiveData.addSource(mWebMovieLiveData,
+                new Observer<Resource<List<rs.edu.raf.rma.homework3.repository.web.model.Movie>>>() {
+                    @Override
+                    public void onChanged(Resource<List<rs.edu.raf.rma.homework3.repository.web.model.Movie>> listResource) {
+                        mWebMovieMediatorLiveData.setValue(listResource);
+
+                        List<rs.edu.raf.rma.homework3.repository.web.model.Movie> newMovies = listResource.getData();
+                        for (rs.edu.raf.rma.homework3.repository.web.model.Movie movie : newMovies) {
+                            addMovie(new Movie(movie.getId(), movie.getTitle(), movie.getDescription(), movie.getDirector(), movie.getProducer(), movie.getYear(), Integer.parseInt(movie.getScore())));
+                        }
+                    }
+                });
+    }
+
+    public LiveData<Resource<List<rs.edu.raf.rma.homework3.repository.web.model.Movie>>> getWebMovies() {
+        return mWebMovieMediatorLiveData;
+    }
 }

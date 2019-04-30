@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Movie {
 
     @SerializedName("id")
-    private int mId;
+    private String mId;
     @SerializedName("title")
     private String mTitle;
     @SerializedName("description")
@@ -17,9 +17,9 @@ public class Movie {
     @SerializedName("release_date")
     private String mYear;
     @SerializedName("rt_score")
-    private int mScore;
+    private String mScore;
 
-    public Movie(int id, String title, String description, String director, String producer, String year, int score) {
+    public Movie(String id, String title, String description, String director, String producer, String year, String score) {
         mId = id;
         mTitle = title;
         mDescription = description;
@@ -29,59 +29,59 @@ public class Movie {
         mScore = score;
     }
 
-    public void setmId(int mId) {
+    public void setId(String mId) {
         this.mId = mId;
     }
 
-    public void setmTitle(String mTitle) {
+    public void setTitle(String mTitle) {
         this.mTitle = mTitle;
     }
 
-    public void setmDescription(String mDescription) {
+    public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
 
-    public void setmDirector(String mDirector) {
+    public void setDirector(String mDirector) {
         this.mDirector = mDirector;
     }
 
-    public void setmProducer(String mProducer) {
+    public void setProducer(String mProducer) {
         this.mProducer = mProducer;
     }
 
-    public void setmYear(String mYear) {
+    public void setYear(String mYear) {
         this.mYear = mYear;
     }
 
-    public void setmScore(int mScore) {
+    public void setScore(String mScore) {
         this.mScore = mScore;
     }
 
-    public int getmId() {
+    public String getId() {
         return mId;
     }
 
-    public String getmTitle() {
+    public String getTitle() {
         return mTitle;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public String getmDirector() {
+    public String getDirector() {
         return mDirector;
     }
 
-    public String getmProducer() {
+    public String getProducer() {
         return mProducer;
     }
 
-    public String getmYear() {
+    public String getYear() {
         return mYear;
     }
 
-    public int getmScore() {
+    public String getScore() {
         return mScore;
     }
 }
